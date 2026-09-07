@@ -16,9 +16,9 @@ The sketch below is from a domain expert, showing what should happen in a sample
 Legend:
 -------
 b                                    = Bool  'b'  (1 Bit)
-Bxxxxxxx                             = Byte  'B'  (8 Bits)
-Wxxxxxxx xxxxxxxx                    = Word  'W'  (2*8 Bits)
-Dxxxxxxx xxxxxxxx xxxxxxxx xxxxxxxx  = DWord 'D'  (4*8 Bits)
+Bbbbbbbb                             = Byte  'B'  (8 Bits)
+Wwwwwwww wwwwwwww                    = Word  'W'  (2*8 Bits)
+Dddddddd dddddddd dddddddd dddddddd  = DWord 'D'  (4*8 Bits)
 
 Provide empty memory page of maximum 8 Bytes:
 |0        1        2        3        4        5        6        7        |  Bytes
@@ -28,22 +28,22 @@ Provide empty memory page of maximum 8 Bytes:
 Allocate A of type DWord
 |0        1        2        3        4        5        6        7        |  Bytes
 |01234567 01234567 01234567 01234567 01234567 01234567 01234567 01234567 |  Bits
-|Axxxxxxx xxxxxxxx xxxxxxxx xxxxxxxx -------- -------- -------- -------- |  Memory usage
+|Aaaaaaaa aaaaaaaa aaaaaaaa aaaaaaaa -------- -------- -------- -------- |  Memory usage
 
 Allocate B of type Byte
 |0        1        2        3        4        5        6        7        |  Bytes
 |01234567 01234567 01234567 01234567 01234567 01234567 01234567 01234567 |  Bits
-|Axxxxxxx xxxxxxxx xxxxxxxx xxxxxxxx Bxxxxxxx -------- -------- -------- |  Memory usage
+|Aaaaaaaa aaaaaaaa aaaaaaaa aaaaaaaa Bbbbbbbb -------- -------- -------- |  Memory usage
 
 Deallocate A
 |0        1        2        3        4        5        6        7        |  Bytes
 |01234567 01234567 01234567 01234567 01234567 01234567 01234567 01234567 |  Bits
-|-------- -------- -------- -------- Bxxxxxxx -------- -------- -------- |  Memory usage
+|-------- -------- -------- -------- Bbbbbbbb -------- -------- -------- |  Memory usage
 
 Allocate C of type Word
 |0        1        2        3        4        5        6        7        |  Bytes
 |01234567 01234567 01234567 01234567 01234567 01234567 01234567 01234567 |  Bits
-|Cxxxxxxx xxxxxxxx -------- -------- Bxxxxxxx -------- -------- -------- |  Memory usage
+|Cccccccc cccccccc -------- -------- Bbbbbbbb -------- -------- -------- |  Memory usage
 ```
 
 ## Allocation rules
