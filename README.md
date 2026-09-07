@@ -54,3 +54,19 @@ Allocate C of type Word
   * Anything larger than a Byte (eg a Word) must be allocated at an even byte address
 * Use the lowest memory address where the allocation would fit. 
 * If memory is fragmented so there would be enough space for an allocation if items were moved around, move items to make space, then allocate.
+
+# Exercise Instructions
+Two exercises - I suggest doing them on separate occasions, in this order.
+
+## Compare different testing styles for this problem.
+* Make a list of scenarios that need to be built and tested, based on the allocation rules.
+* Work through the list and add tests for each scenario in both the 'classic' style and the 'approvals' style, following the example of the existing test.
+* Don't forget to commit every time the tests are passing.
+* When all the scenarios are implemented and working, review the tests for readability. Note down pros and cons of each kind. For example, how much test code is there? How easy is it to read? Do you think it will be easy to maintain when the requirements change?
+
+## Assess diagnosability of different testing styles.
+* Go to the 'sample_solution' branch where you have many scenarios implemented in both testing styles. Ensure all the tests pass. 
+* There are 6 bugs hidden behind feature flags. We will use 3 to examine the 'classic' tests and the other 3 to examine the 'approval' tests. DO NOT look at the implementation code to find out what each bug is. That will spoil the fun!
+* Randomly pick three bugs, enable them one at a time. Look at the 'classic' test failures and write bug reports explaining the problem.
+* For the remaining three bugs, enable them one at a time. Look at the 'approval' test failures and write bug reports explaining the problem.
+* Discuss: How easy was it to diagnose each kind of test failure purely from the test failure message? You can now look at the implementation code to find out if your bug reports were correct.
