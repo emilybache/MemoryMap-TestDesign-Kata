@@ -6,7 +6,7 @@ Make the code and tests as readable as possible.
 The software needs to take a piece of memory of fixed size and allocate and de-allocate pieces of it. You can request to allocate various types, with some rules for where they can be allocated.
 
 ## Example scenario
-The sketch below is from a domain expert, showing what should happen in a sample scenario. You begin with 8 bytes of empty memory, then allocate a DWord, a Byte, de-allocate the DWord, then allocate a Word. 
+The sketch below is from a domain expert, showing what should happen in a sample scenario. You begin with 8 bytes of empty memory, then allocate a DWord, a Byte, de-allocate the DWord, then allocate a Word. Note: the spaces shown between bytes are not reflected on disk, they are included to make the diagrams easier to read for humans.
 
 ```
 |0        1        2        3        4        5        6        7        |  Bytes
@@ -19,8 +19,6 @@ b                                    = Bool  'b'  (1 Bit)
 Bxxxxxxx                             = Byte  'B'  (8 Bits)
 Wxxxxxxx xxxxxxxx                    = Word  'W'  (2*8 Bits)
 Dxxxxxxx xxxxxxxx xxxxxxxx xxxxxxxx  = DWord 'D'  (4*8 Bits)
-
-Note: the spaces shown between bytes are not reflected on disk, they are included to make the diagram easier to read for humans.
 
 Provide empty memory page of maximum 8 Bytes:
 |0        1        2        3        4        5        6        7        |  Bytes
