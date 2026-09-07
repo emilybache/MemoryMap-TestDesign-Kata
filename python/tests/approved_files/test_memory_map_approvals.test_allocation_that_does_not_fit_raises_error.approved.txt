@@ -1,0 +1,12 @@
+Allocating a DWord into a memory page too small to ever hold it should raise an error rather than silently failing or corrupting memory.
+
+Empty memory page of maximum 2 Bytes:
+|0        1        |  Bytes
+|01234567 01234567 |  Bits
+|-------- -------- |  Memory usage
+
+Allocate A of type DWord
+|0        1        |  Bytes
+|01234567 01234567 |  Bits
+|-------- -------- |  Memory usage
+ValueError: Not enough memory to allocate A

@@ -1,0 +1,11 @@
+Memory can end up fragmented into several small gaps at once, none of which is big enough alone, and no single move can open up enough space either - only shifting every allocation after the first gap down by one byte closes all the gaps at once. Here, there are two one-byte gaps plus two untouched Bytes at the end, for exactly four free bytes in total - just enough for a DWord, but only if C, E, and F all move down to consolidate every gap into one block.
+
+Starting point with maximum 8 Bytes:
+|0        1        2        3        4        5        6        7        |  Bytes
+|01234567 01234567 01234567 01234567 01234567 01234567 01234567 01234567 |  Bits
+|Aaaaaaaa -------- Cccccccc -------- Eeeeeeee Ffffffff -------- -------- |  Memory usage
+
+Allocate G of type DWord
+|0        1        2        3        4        5        6        7        |  Bytes
+|01234567 01234567 01234567 01234567 01234567 01234567 01234567 01234567 |  Bits
+|Aaaaaaaa Cccccccc Eeeeeeee Ffffffff Gggggggg gggggggg gggggggg gggggggg |  Memory usage

@@ -3,7 +3,7 @@ import pytest
 from memory_map import MemoryMap, BOOL, BYTE, WORD, DWORD
 
 
-def test_allocate_reuses_space_freed_by_earlier_deallocation():
+def test_readme_scenario():
     memory = MemoryMap(size_bytes=8)
 
     memory.allocate("A", DWORD)

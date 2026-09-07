@@ -1,0 +1,31 @@
+When memory is fragmented into gaps that are individually too small for a new allocation, existing allocations should be moved (compacted) to open up a single contiguous, aligned block. Here, freeing the middle Byte leaves two small gaps too small to fit a Word on their own, so allocating a Word should shift the last Byte down to free up enough contiguous space.
+
+Empty memory page of maximum 4 Bytes:
+|0        1        2        3        |  Bytes
+|01234567 01234567 01234567 01234567 |  Bits
+|-------- -------- -------- -------- |  Memory usage
+
+Allocate A of type Byte
+|0        1        2        3        |  Bytes
+|01234567 01234567 01234567 01234567 |  Bits
+|Aaaaaaaa -------- -------- -------- |  Memory usage
+
+Allocate B of type Byte
+|0        1        2        3        |  Bytes
+|01234567 01234567 01234567 01234567 |  Bits
+|Aaaaaaaa Bbbbbbbb -------- -------- |  Memory usage
+
+Allocate C of type Byte
+|0        1        2        3        |  Bytes
+|01234567 01234567 01234567 01234567 |  Bits
+|Aaaaaaaa Bbbbbbbb Cccccccc -------- |  Memory usage
+
+Deallocate B
+|0        1        2        3        |  Bytes
+|01234567 01234567 01234567 01234567 |  Bits
+|Aaaaaaaa -------- Cccccccc -------- |  Memory usage
+
+Allocate D of type Word
+|0        1        2        3        |  Bytes
+|01234567 01234567 01234567 01234567 |  Bits
+|Aaaaaaaa Cccccccc Dddddddd dddddddd |  Memory usage
