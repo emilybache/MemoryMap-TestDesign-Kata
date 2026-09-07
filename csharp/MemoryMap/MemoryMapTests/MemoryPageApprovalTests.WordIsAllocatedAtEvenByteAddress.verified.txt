@@ -1,0 +1,11 @@
+﻿Word allocations must always start at an even byte address. Allocating a Bool first leaves memory offset by a single bit, but the Word that follows should still skip ahead to the next even byte rather than packing right after it.
+
+Starting point with maximum 8 Bytes:
+|0        1        2        3        4        5        6        7        |  Bytes
+|01234567 01234567 01234567 01234567 01234567 01234567 01234567 01234567 |  Bits
+|A------- -------- -------- -------- -------- -------- -------- -------- |  Memory usage
+
+Allocate B of type Word
+|0        1        2        3        4        5        6        7        |  Bytes
+|01234567 01234567 01234567 01234567 01234567 01234567 01234567 01234567 |  Bits
+|A------- -------- Bbbbbbbb bbbbbbbb -------- -------- -------- -------- |  Memory usage

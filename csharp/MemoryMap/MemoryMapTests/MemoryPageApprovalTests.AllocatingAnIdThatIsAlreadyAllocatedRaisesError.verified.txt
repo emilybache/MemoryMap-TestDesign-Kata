@@ -1,0 +1,12 @@
+﻿Allocating an id that already has a current allocation should raise an error rather than creating a duplicate or silently overwriting it.
+
+Starting point with maximum 8 Bytes:
+|0        1        2        3        4        5        6        7        |  Bytes
+|01234567 01234567 01234567 01234567 01234567 01234567 01234567 01234567 |  Bits
+|Aaaaaaaa -------- -------- -------- -------- -------- -------- -------- |  Memory usage
+
+Allocate A of type Byte
+|0        1        2        3        4        5        6        7        |  Bytes
+|01234567 01234567 01234567 01234567 01234567 01234567 01234567 01234567 |  Bits
+|Aaaaaaaa -------- -------- -------- -------- -------- -------- -------- |  Memory usage
+InvalidOperationException: An allocation named A already exists
