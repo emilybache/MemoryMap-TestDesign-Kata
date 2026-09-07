@@ -66,7 +66,6 @@ Two exercises - I suggest doing them on separate occasions, in this order.
 
 ## Assess diagnosability of different testing styles.
 * Go to the 'sample_solution' branch where you have many scenarios implemented in both testing styles. Ensure all the tests pass. 
-* There are 6 bugs hidden behind feature flags. We will use 3 to examine the 'classic' tests and the other 3 to examine the 'approval' tests. DO NOT look at the implementation code to find out what each bug is. That will spoil the fun!
-* Randomly pick three bugs, enable them one at a time. Look at the 'classic' test failures and write bug reports explaining the problem.
-* For the remaining three bugs, enable them one at a time. Look at the 'approval' test failures and write bug reports explaining the problem.
-* Discuss: How easy was it to diagnose each kind of test failure purely from the test failure message? You can now look at the implementation code to find out if your bug reports were correct.
+* There are 12 bugs hidden behind feature flags. We will use 6 to examine the 'classic' tests and the other 6 to examine the 'approval' tests. DO NOT look at the implementation code to find out what each bug is. That will spoil the fun!
+* Enable one bug at a time. Based purely on the test failures, write bug reports explaining each problem. Examine odd bugs with a 'classic' test failure and even bugs with an 'approval' test failure, so you alternate which kind of test to use in your analysis.
+* Discuss: How easy was it to diagnose each kind of test failure purely from the test failure message? Were either 'classic' or 'approval' style tests easier to diagnose? You can now look at the implementation code to find out if your bug reports were correct.
