@@ -13,9 +13,9 @@ Allocate A of type Bool
 Allocate B of type Word
 |0        1        2        3        4        5        6        7        |  Bytes
 |01234567 01234567 01234567 01234567 01234567 01234567 01234567 01234567 |  Bits
-|A------- -------- Bxxxxxxx xxxxxxxx -------- -------- -------- -------- |  Memory usage
+|A------- -------- Bbbbbbbb bbbbbbbb -------- -------- -------- -------- |  Memory usage
 
 Allocate C of type DWord
 |0        1        2        3        4        5        6        7        |  Bytes
 |01234567 01234567 01234567 01234567 01234567 01234567 01234567 01234567 |  Bits
-|A------- -------- Bxxxxxxx xxxxxxxx Cxxxxxxx xxxxxxxx xxxxxxxx xxxxxxxx |  Memory usage
+|A------- -------- Bbbbbbbb bbbbbbbb Cccccccc cccccccc cccccccc cccccccc |  Memory usage

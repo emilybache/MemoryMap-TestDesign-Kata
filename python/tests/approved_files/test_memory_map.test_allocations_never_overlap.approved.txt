@@ -8,19 +8,19 @@ Empty memory page of maximum 8 Bytes:
 Allocate A of type DWord
 |0        1        2        3        4        5        6        7        |  Bytes
 |01234567 01234567 01234567 01234567 01234567 01234567 01234567 01234567 |  Bits
-|Axxxxxxx xxxxxxxx xxxxxxxx xxxxxxxx -------- -------- -------- -------- |  Memory usage
+|Aaaaaaaa aaaaaaaa aaaaaaaa aaaaaaaa -------- -------- -------- -------- |  Memory usage
 
 Allocate B of type Byte
 |0        1        2        3        4        5        6        7        |  Bytes
 |01234567 01234567 01234567 01234567 01234567 01234567 01234567 01234567 |  Bits
-|Axxxxxxx xxxxxxxx xxxxxxxx xxxxxxxx Bxxxxxxx -------- -------- -------- |  Memory usage
+|Aaaaaaaa aaaaaaaa aaaaaaaa aaaaaaaa Bbbbbbbb -------- -------- -------- |  Memory usage
 
 Allocate C of type Bool
 |0        1        2        3        4        5        6        7        |  Bytes
 |01234567 01234567 01234567 01234567 01234567 01234567 01234567 01234567 |  Bits
-|Axxxxxxx xxxxxxxx xxxxxxxx xxxxxxxx Bxxxxxxx C------- -------- -------- |  Memory usage
+|Aaaaaaaa aaaaaaaa aaaaaaaa aaaaaaaa Bbbbbbbb C------- -------- -------- |  Memory usage
 
 Allocate D of type Word
 |0        1        2        3        4        5        6        7        |  Bytes
 |01234567 01234567 01234567 01234567 01234567 01234567 01234567 01234567 |  Bits
-|Axxxxxxx xxxxxxxx xxxxxxxx xxxxxxxx Bxxxxxxx C------- Dxxxxxxx xxxxxxxx |  Memory usage
+|Aaaaaaaa aaaaaaaa aaaaaaaa aaaaaaaa Bbbbbbbb C------- Dddddddd dddddddd |  Memory usage
