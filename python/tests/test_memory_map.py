@@ -15,11 +15,16 @@ class Scenario:
     def __init__(self, size_bytes):
         self.memory = MemoryMap(size_bytes=size_bytes)
         self.story = []
+        self._narrating = False
 
     def describe(self, text):
         self.story.append(text)
         size_bytes = self.memory.size_bits // 8
-        self._show(f"Provide empty memory page of maximum {size_bytes} Bytes:")
+        if self.memory.allocations:
+            self._show(f"Starting point with maximum {size_bytes} Bytes:")
+        else:
+            self._show(f"Empty memory page of maximum {size_bytes} Bytes:")
+        self._narrating = True
 
     def _separate(self):
         if self.story and self.story[-1] != "":
@@ -45,11 +50,13 @@ class Scenario:
 
     def allocate(self, name, type):
         self.memory.allocate(name, type)
-        self._show(f"Allocate {name} of type {TYPE_NAMES[type]}")
+        if self._narrating:
+            self._show(f"Allocate {name} of type {TYPE_NAMES[type]}")
 
     def deallocate(self, name):
         self.memory.deallocate(name)
-        self._show(f"Deallocate {name}")
+        if self._narrating:
+            self._show(f"Deallocate {name}")
 
     def text(self):
         return "\n".join(self.story)
@@ -129,5 +136,30 @@ def test_fragmented_memory_is_compacted_before_allocation():
     scenario.allocate("C", BYTE)
     scenario.deallocate("B")
     scenario.allocate("D", WORD)
+
+    verify(scenario.text())
+
+
+def test_severely_fragmented_memory_requires_moving_multiple_allocations(scenario):
+    # set up severely fragmented memory
+    scenario.allocate("A", BYTE)
+    scenario.allocate("B", BYTE)
+    scenario.allocate("C", BYTE)
+    scenario.allocate("D", BYTE)
+    scenario.allocate("E", BYTE)
+    scenario.allocate("F", BYTE)
+    scenario.deallocate("B")
+    scenario.deallocate("D")
+
+    scenario.describe(
+        "Memory can end up fragmented into several small gaps at once, none of "
+        "which is big enough alone, and no single move can open up enough "
+        "space either - only shifting every allocation after the first gap "
+        "down by one byte closes all the gaps at once. Here, there are two "
+        "one-byte gaps plus two untouched Bytes at the end, for exactly "
+        "four free bytes in total - just enough for a DWord, but only if C, "
+        "E, and F all move down to consolidate every gap into one block."
+    )
+    scenario.allocate("G", DWORD)
 
     verify(scenario.text())

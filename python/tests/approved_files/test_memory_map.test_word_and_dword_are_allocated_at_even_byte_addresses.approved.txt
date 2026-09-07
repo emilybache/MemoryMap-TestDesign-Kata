@@ -1,6 +1,6 @@
 Word and DWord allocations must always start at an even byte address. Allocating a Bool first leaves memory offset by a single bit, but the Word and DWord that follow should still skip ahead to the next even byte rather than packing right after it.
 
-Provide empty memory page of maximum 8 Bytes:
+Empty memory page of maximum 8 Bytes:
 |0        1        2        3        4        5        6        7        |  Bytes
 |01234567 01234567 01234567 01234567 01234567 01234567 01234567 01234567 |  Bits
 |-------- -------- -------- -------- -------- -------- -------- -------- |  Memory usage

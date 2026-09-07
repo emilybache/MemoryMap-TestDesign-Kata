@@ -1,6 +1,6 @@
 This is the example scenario from the kata README: allocate a DWord, allocate a Byte, deallocate the DWord, then allocate a Word. Each allocation should land exactly where the README diagram shows.
 
-Provide empty memory page of maximum 8 Bytes:
+Empty memory page of maximum 8 Bytes:
 |0        1        2        3        4        5        6        7        |  Bytes
 |01234567 01234567 01234567 01234567 01234567 01234567 01234567 01234567 |  Bits
 |-------- -------- -------- -------- -------- -------- -------- -------- |  Memory usage
