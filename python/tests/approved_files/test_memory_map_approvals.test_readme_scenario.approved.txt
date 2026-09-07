@@ -1,0 +1,26 @@
+This is the example scenario from the kata README: allocate a DWord, allocate a Byte, deallocate the DWord, then allocate a Word. Each allocation should land exactly where the README diagram shows.
+
+Empty memory page of maximum 8 Bytes:
+|0        1        2        3        4        5        6        7        |  Bytes
+|01234567 01234567 01234567 01234567 01234567 01234567 01234567 01234567 |  Bits
+|-------- -------- -------- -------- -------- -------- -------- -------- |  Memory usage
+
+Allocate A of type DWord
+|0        1        2        3        4        5        6        7        |  Bytes
+|01234567 01234567 01234567 01234567 01234567 01234567 01234567 01234567 |  Bits
+|Aaaaaaaa aaaaaaaa aaaaaaaa aaaaaaaa -------- -------- -------- -------- |  Memory usage
+
+Allocate B of type Byte
+|0        1        2        3        4        5        6        7        |  Bytes
+|01234567 01234567 01234567 01234567 01234567 01234567 01234567 01234567 |  Bits
+|Aaaaaaaa aaaaaaaa aaaaaaaa aaaaaaaa Bbbbbbbb -------- -------- -------- |  Memory usage
+
+Deallocate A
+|0        1        2        3        4        5        6        7        |  Bytes
+|01234567 01234567 01234567 01234567 01234567 01234567 01234567 01234567 |  Bits
+|-------- -------- -------- -------- Bbbbbbbb -------- -------- -------- |  Memory usage
+
+Allocate C of type Word
+|0        1        2        3        4        5        6        7        |  Bytes
+|01234567 01234567 01234567 01234567 01234567 01234567 01234567 01234567 |  Bits
+|Cccccccc cccccccc -------- -------- Bbbbbbbb -------- -------- -------- |  Memory usage
