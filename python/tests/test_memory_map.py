@@ -27,14 +27,15 @@ class Scenario:
 
     def _print_memory(self):
         size_bytes = self.memory.size_bits // 8
-        bytes_header = "|" + "".join(f"{byte:<8}" for byte in range(size_bytes)) + "|  Bytes"
-        bits_header = "|" + "01234567" * size_bytes + "|  Bits"
+        bytes_header = "|" + "".join(f"{byte:<9}" for byte in range(size_bytes)) + "|  Bytes"
+        bits_header = "|" + "01234567 " * size_bytes + "|  Bits"
         usage = ["-"] * self.memory.size_bits
         for allocation in self.memory.allocations:
             usage[allocation.start_bit] = allocation.id[-1]
             for bit in range(allocation.start_bit + 1, allocation.start_bit + allocation.size_bits):
                 usage[bit] = "x"
-        usage_line = "|" + "".join(usage) + "|  Memory usage"
+        usage_bytes = ["".join(usage[i:i + 8]) for i in range(0, len(usage), 8)]
+        usage_line = "|" + " ".join(usage_bytes) + " |  Memory usage"
         self.story.append("\n".join([bytes_header, bits_header, usage_line]))
 
     def _show(self, label):
@@ -56,7 +57,7 @@ class Scenario:
 
 @pytest.fixture
 def scenario():
-    return Scenario(size_bytes=10)
+    return Scenario(size_bytes=8)
 
 
 def test_readme_scenario(scenario):

@@ -1,21 +1,21 @@
 Word and DWord allocations must always start at an even byte address. Allocating a Bool first leaves memory offset by a single bit, but the Word and DWord that follow should still skip ahead to the next even byte rather than packing right after it.
 
-Provide empty memory page of maximum 10 Bytes:
-|0       1       2       3       4       5       6       7       8       9       |  Bytes
-|01234567012345670123456701234567012345670123456701234567012345670123456701234567|  Bits
-|--------------------------------------------------------------------------------|  Memory usage
+Provide empty memory page of maximum 8 Bytes:
+|0        1        2        3        4        5        6        7        |  Bytes
+|01234567 01234567 01234567 01234567 01234567 01234567 01234567 01234567 |  Bits
+|-------- -------- -------- -------- -------- -------- -------- -------- |  Memory usage
 
 Allocate A of type Bool
-|0       1       2       3       4       5       6       7       8       9       |  Bytes
-|01234567012345670123456701234567012345670123456701234567012345670123456701234567|  Bits
-|A-------------------------------------------------------------------------------|  Memory usage
+|0        1        2        3        4        5        6        7        |  Bytes
+|01234567 01234567 01234567 01234567 01234567 01234567 01234567 01234567 |  Bits
+|A------- -------- -------- -------- -------- -------- -------- -------- |  Memory usage
 
 Allocate B of type Word
-|0       1       2       3       4       5       6       7       8       9       |  Bytes
-|01234567012345670123456701234567012345670123456701234567012345670123456701234567|  Bits
-|A---------------Bxxxxxxxxxxxxxxx------------------------------------------------|  Memory usage
+|0        1        2        3        4        5        6        7        |  Bytes
+|01234567 01234567 01234567 01234567 01234567 01234567 01234567 01234567 |  Bits
+|A------- -------- Bxxxxxxx xxxxxxxx -------- -------- -------- -------- |  Memory usage
 
 Allocate C of type DWord
-|0       1       2       3       4       5       6       7       8       9       |  Bytes
-|01234567012345670123456701234567012345670123456701234567012345670123456701234567|  Bits
-|A---------------BxxxxxxxxxxxxxxxCxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx----------------|  Memory usage
+|0        1        2        3        4        5        6        7        |  Bytes
+|01234567 01234567 01234567 01234567 01234567 01234567 01234567 01234567 |  Bits
+|A------- -------- Bxxxxxxx xxxxxxxx Cxxxxxxx xxxxxxxx xxxxxxxx xxxxxxxx |  Memory usage
