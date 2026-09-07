@@ -1,7 +1,12 @@
-import pytest
-from approvaltests import verify
+from memory_map import MemoryMap, BYTE, WORD, DWORD
 
-from memory_map import *
 
-def test_classic():
-    assert "Hello World"
+def test_allocate_reuses_space_freed_by_earlier_deallocation():
+    memory = MemoryMap(size_bytes=8)
+
+    memory.allocate("A", DWORD)
+    memory.allocate("B", BYTE)
+    memory.deallocate("A")
+    memory.allocate("C", WORD)
+
+    assert memory.start_bit_of("C") == 0, "C should reuse the space freed by deallocating A, not sit after B"

@@ -35,6 +35,12 @@ class MemoryMap:
     def deallocate(self, id):
         self._allocations = [a for a in self._allocations if a.id != id]
 
+    def start_bit_of(self, id):
+        for allocation in self._allocations:
+            if allocation.id == id:
+                return allocation.start_bit
+        raise KeyError(f"No allocation with id {id}")
+
     def _find_free_slot(self, size_bits):
         for start_bit in range(0, self._size_bits - size_bits + 1):
             if self._is_free(start_bit, size_bits):
