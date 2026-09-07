@@ -115,17 +115,30 @@ def test_allocations_never_overlap(scenario):
     verify(scenario.text())
 
 
-def test_word_and_dword_are_allocated_at_even_byte_addresses(scenario):
+def test_word_is_allocated_at_even_byte_address(scenario):
+    scenario.allocate("A", BOOL)
     scenario.describe(
-        "Word and DWord allocations must always start at an even byte address. "
+        "Word allocations must always start at an even byte address. "
         "Allocating a Bool first leaves memory offset by a single bit, but the "
-        "Word and DWord that follow should still skip ahead to the next even "
-        "byte rather than packing right after it."
+        "Word that follows should still skip ahead to the next even byte "
+        "rather than packing right after it."
     )
 
-    scenario.allocate("A", BOOL)
     scenario.allocate("B", WORD)
-    scenario.allocate("C", DWORD)
+
+    verify(scenario.text())
+
+
+def test_dword_is_allocated_at_even_byte_address(scenario):
+    scenario.allocate("A", BOOL)
+    scenario.describe(
+        "DWord allocations must always start at an even byte address. "
+        "Allocating a Bool first leaves memory offset by a single bit, but the "
+        "DWord that follows should still skip ahead to the next even byte "
+        "rather than packing right after it."
+    )
+
+    scenario.allocate("B", DWORD)
 
     verify(scenario.text())
 
