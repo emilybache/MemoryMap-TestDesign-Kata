@@ -34,6 +34,8 @@ class MemoryMap:
         return tuple(self._allocations)
 
     def allocate(self, id, size_bits):
+        if any(a.id == id for a in self._allocations):
+            raise ValueError(f"An allocation named {id} already exists")
         alignment = _ALIGNMENT[size_bits]
         start_bit = self._find_free_slot(size_bits, alignment)
         if start_bit is None:

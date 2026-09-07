@@ -156,6 +156,18 @@ def test_allocation_that_does_not_fit_raises_error():
     verify(scenario.text())
 
 
+def test_allocating_an_id_that_is_already_allocated_raises_error(scenario):
+    scenario.allocate("A", BYTE)
+    scenario.describe(
+        "Allocating an id that already has a current allocation should raise "
+        "an error rather than creating a duplicate or silently overwriting it."
+    )
+
+    scenario.allocate("A", BYTE)
+
+    verify(scenario.text())
+
+
 def test_deallocating_an_id_that_is_not_allocated_raises_error(scenario):
     scenario.describe(
         "Deallocating an id that has no current allocation should raise an "
