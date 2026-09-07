@@ -44,6 +44,8 @@ class MemoryMap:
         self._allocations.append(Allocation(id, start_bit, size_bits))
 
     def deallocate(self, id):
+        if not any(a.id == id for a in self._allocations):
+            raise ValueError(f"No allocation named {id} to deallocate")
         self._allocations = [a for a in self._allocations if a.id != id]
 
     def _find_free_slot(self, size_bits, alignment):

@@ -18,13 +18,13 @@ class Scenario:
         self._narrating = False
 
     def describe(self, text):
+        self._narrating = True
         self.story.append(text)
         size_bytes = self.memory.size_bits // 8
         if self.memory.allocations:
             self._show(f"Starting point with maximum {size_bytes} Bytes:")
         else:
             self._show(f"Empty memory page of maximum {size_bytes} Bytes:")
-        self._narrating = True
 
     def _separate(self):
         if self.story and self.story[-1] != "":
@@ -44,19 +44,36 @@ class Scenario:
         self.story.append("\n".join([bytes_header, bits_header, usage_line]))
 
     def _show(self, label):
-        self._separate()
-        self.story.append(label)
-        self._print_memory()
+        if self._narrating:
+            self._separate()
+            self.story.append(label)
+            self._print_memory()
 
     def allocate(self, name, type):
-        self.memory.allocate(name, type)
-        if self._narrating:
-            self._show(f"Allocate {name} of type {TYPE_NAMES[type]}")
+        error = None
+        try:
+            self.memory.allocate(name, type)
+        except Exception as caught:
+            if not self._narrating:
+                raise
+            error = caught
+        self._show(f"Allocate {name} of type {TYPE_NAMES[type]}")
+        self._report_error(error)
 
     def deallocate(self, name):
-        self.memory.deallocate(name)
-        if self._narrating:
-            self._show(f"Deallocate {name}")
+        error = None
+        try:
+            self.memory.deallocate(name)
+        except Exception as caught:
+            if not self._narrating:
+                raise
+            error = caught
+        self._show(f"Deallocate {name}")
+        self._report_error(error)
+
+    def _report_error(self, error: Exception | None):
+        if self._narrating and error:
+            self.story.append(f"{error.__class__.__name__}: {error}")
 
     def text(self):
         return "\n".join(self.story)
@@ -114,10 +131,27 @@ def test_word_and_dword_are_allocated_at_even_byte_addresses(scenario):
 
 
 def test_allocation_that_does_not_fit_raises_error():
-    memory = MemoryMap(size_bytes=2)
+    scenario = Scenario(size_bytes=2)
+    scenario.describe(
+        "Allocating a DWord into a memory page too small to ever hold it "
+        "should raise an error rather than silently failing or corrupting "
+        "memory."
+    )
 
-    with pytest.raises(ValueError):
-        memory.allocate("A", DWORD)
+    scenario.allocate("A", DWORD)
+
+    verify(scenario.text())
+
+
+def test_deallocating_an_id_that_is_not_allocated_raises_error(scenario):
+    scenario.describe(
+        "Deallocating an id that has no current allocation should raise an "
+        "error rather than silently doing nothing."
+    )
+
+    scenario.deallocate("A")
+
+    verify(scenario.text())
 
 
 def test_fragmented_memory_is_compacted_before_allocation():
