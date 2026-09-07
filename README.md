@@ -14,16 +14,16 @@ The software needs to take a piece of memory of fixed size and allocate and de-a
 The sketch below is from a domain expert, showing what should happen in a sample scenario. You begin with 10 bytes of empty memory, then allocate a DWord, a Byte, de-allocate the DWord, then allocate a Word. 
 
 ```
-|0       1       2       3       4       5       6       7       8       9       |  Bytes
-|01234567012345670123456701234567012345670123456701234567012345670123456701234567|  Bits
-|--------------------------------------------------------------------------------|  Memory usage
+|0        1        2        3        4        5        6        7        |  Bytes
+|01234567 01234567 01234567 01234567 01234567 01234567 01234567 01234567 |  Bits
+|-------- -------- -------- -------- -------- -------- -------- -------- |  Memory usage
 
 Legend:
 -------
-b                                 = Bool  'b'  (1 Bit)
-Bxxxxxxx                          = Byte  'B'  (8 Bits)
-Wxxxxxxxxxxxxxxx                  = Word  'W'  (2*8 Bits)
-Dxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx  = DWord 'D'  (4*8 Bits)
+b                                    = Bool  'b'  (1 Bit)
+Bxxxxxxx                             = Byte  'B'  (8 Bits)
+Wxxxxxxx xxxxxxxx                    = Word  'W'  (2*8 Bits)
+Dxxxxxxx xxxxxxxx xxxxxxxx xxxxxxxx  = DWord 'D'  (4*8 Bits)
 
 Provide empty memory page of maximum 10 Bytes:
 |0       1       2       3       4       5       6       7       8       9       |  Bytes
