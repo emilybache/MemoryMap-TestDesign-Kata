@@ -47,10 +47,10 @@ Allocate C of type Word
 ```
 
 ## Allocation rules
-* Use the lowest memory address where the allocation would fit. 
 * Each memory allocation is contiguous, without gaps, and allocations may not overlap.
-* If memory is fragmented so there would be enough space for an allocation if items were moved around, move items to a lower valid address to make space, then allocate.
 * Follow the alignment rules:
   * Bool (1 Bit)      Alignment rule: can be allocated at any bit address
   * Byte (8 Bits)     Alignment rule: must be allocated at a byte address
   * Anything larger than a Byte (eg a Word) must be allocated at an even byte address
+* Use the lowest memory address where the allocation would fit. 
+* If memory is fragmented so there would be enough space for an allocation if items were moved around, move items to make space, then allocate.
