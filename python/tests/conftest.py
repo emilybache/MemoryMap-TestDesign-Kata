@@ -10,6 +10,20 @@ TYPE_NAMES = {
 }
 
 
+def print_memory(memory):
+    size_bytes = memory.size_bits // 8
+    bytes_header = "|" + "".join(f"{byte:<9}" for byte in range(size_bytes)) + "|  Bytes"
+    bits_header = "|" + "01234567 " * size_bytes + "|  Bits"
+    usage = ["-"] * memory.size_bits
+    for allocation in memory.allocations:
+        usage[allocation.start_bit] = allocation.id[-1]
+        for bit in range(allocation.start_bit + 1, allocation.start_bit + allocation.size_bits):
+            usage[bit] = allocation.id[-1].lower()
+    usage_bytes = ["".join(usage[i:i + 8]) for i in range(0, len(usage), 8)]
+    usage_line = "|" + " ".join(usage_bytes) + " |  Memory usage"
+    return "\n".join([bytes_header, bits_header, usage_line])
+
+
 class Scenario:
     def __init__(self, size_bytes):
         self.memory = MemoryMap(size_bytes=size_bytes)
@@ -29,24 +43,11 @@ class Scenario:
         if self.story and self.story[-1] != "":
             self.story.append("")
 
-    def _print_memory(self):
-        size_bytes = self.memory.size_bits // 8
-        bytes_header = "|" + "".join(f"{byte:<9}" for byte in range(size_bytes)) + "|  Bytes"
-        bits_header = "|" + "01234567 " * size_bytes + "|  Bits"
-        usage = ["-"] * self.memory.size_bits
-        for allocation in self.memory.allocations:
-            usage[allocation.start_bit] = allocation.id[-1]
-            for bit in range(allocation.start_bit + 1, allocation.start_bit + allocation.size_bits):
-                usage[bit] = allocation.id[-1].lower()
-        usage_bytes = ["".join(usage[i:i + 8]) for i in range(0, len(usage), 8)]
-        usage_line = "|" + " ".join(usage_bytes) + " |  Memory usage"
-        self.story.append("\n".join([bytes_header, bits_header, usage_line]))
-
     def _show(self, label):
         if self._narrating:
             self._separate()
             self.story.append(label)
-            self._print_memory()
+            self.story.append(print_memory(self.memory))
 
     def allocate(self, name, type):
         error = None
