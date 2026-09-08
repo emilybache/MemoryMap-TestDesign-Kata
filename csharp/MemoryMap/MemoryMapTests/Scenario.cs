@@ -38,6 +38,18 @@ internal static class MemoryPagePrinter
 
         return string.Join("\n", [bytesHeader, bitsHeader, usageLine]);
     }
+
+    public static string PrintBasic(MemoryPage memory)
+    {
+        var usage = Enumerable.Repeat('-', 64).ToArray();
+        foreach (var allocation in memory.Allocations)
+        {
+            var label = allocation.Id[^1] + new string('x', allocation.SizeBits - 1);
+            label.CopyTo(0, usage, allocation.StartBit, label.Length);
+        }
+
+        return new string(usage);
+    }
 }
 
 internal sealed class Scenario
