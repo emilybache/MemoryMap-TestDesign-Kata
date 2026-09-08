@@ -1,0 +1,8 @@
+﻿Allocate A of type DWord
+Axxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx--------------------------------
+Allocate B of type Byte
+AxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxBxxxxxxx------------------------
+Deallocate A
+--------------------------------Bxxxxxxx------------------------
+Allocate C of type Word
+Cxxxxxxxxxxxxxxx----------------Bxxxxxxx------------------------

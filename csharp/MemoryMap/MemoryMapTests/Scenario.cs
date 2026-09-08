@@ -39,6 +39,7 @@ internal static class MemoryPagePrinter
         return string.Join("\n", [bytesHeader, bitsHeader, usageLine]);
     }
 
+    // Basic print method that is less sophisticated and the code is easier to read
     public static string PrintBasic(MemoryPage memory)
     {
         var usage = Enumerable.Repeat('-', 64).ToArray();
@@ -144,4 +145,36 @@ internal sealed class Scenario
             _story.Add($"{error.GetType().Name}: {error.Message}");
         }
     }
+}
+
+// Basic scenario building class that is easier to understand than the other one
+internal sealed class BasicScenario
+{
+    private readonly MemoryPage _memory;
+    private readonly List<string> _story = [];
+
+    public BasicScenario(int sizeBytes)
+    {
+        _memory = new MemoryPage(sizeBytes);
+    }
+
+    public void Show(string label)
+    {
+        _story.Add(label);
+        _story.Add(MemoryPagePrinter.PrintBasic(_memory));
+    }
+
+    public void Allocate(string name, int type)
+    {
+        _memory.Allocate(name, type);
+        Show($"Allocate {name} of type {TypeNames.ById[type]}");
+    }
+
+    public void Deallocate(string name)
+    {
+        _memory.Deallocate(name);
+        Show($"Deallocate {name}");
+    }
+
+    public string Text() => string.Join("\n", _story);
 }
